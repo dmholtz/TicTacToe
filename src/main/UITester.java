@@ -28,7 +28,7 @@ public class UITester implements MouseListener{
 		 */
 		JFrame meinFrame = new JFrame("Some stupid name here");
 		meinFrame.setSize(800, 500);
-		meinFrame.setResizable(true);
+		meinFrame.setResizable(false);
 		/*
 		 * Hinzufügen einer einfachen Komponente (hier: JLabel)
 		 */
@@ -62,7 +62,7 @@ public class UITester implements MouseListener{
         	boxes[i].setMaximumSize(new Dimension(80,80));
         	// boxes[i].setBackground(Color.WHITE);
         	gamePanel.add(boxes[i]);
-        	boxes[i].visible = true;
+        	boxes[i].addMouseListener(this);
         }
         
 //        JPanel or = new JPanel();
@@ -89,7 +89,7 @@ public class UITester implements MouseListener{
         splitpane.setEnabled(false);
         
         //c.setSize(400, 400);
-        boxes[0].addMouseListener(this);
+        //boxes[0].addMouseListener(this);
         //gamePanel.add(c);
  
         // Hier fügen wir unserem Dialog unser JSplitPane hinzu
@@ -107,8 +107,8 @@ public class UITester implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("Mouse clicked");
-		boxes[0].visible = !boxes[0].visible;
-		boxes[0].paintSymbol(Symbol.X);
+		TilePanel t = (TilePanel)e.getComponent();
+		t.paintSymbol(Symbol.X, Color.BLUE);		
 		//boxes[0].setVisible(true);
 		//boxes[0].repaint();
 	}
@@ -116,16 +116,23 @@ public class UITester implements MouseListener{
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("wuwwu");
-		
-		
+		System.out.println(e.getSource());
+		TilePanel t = (TilePanel)e.getComponent();
+		if(t.isPreviewEnabled())
+		{
+			t.previewSymbol(Symbol.X, Color.BLUE);
+		}
+			
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		boxes[0].paintSymbol(Symbol.O);
-		//boxes[0].repaint();
+		TilePanel t = (TilePanel)e.getComponent();
+		if(t.isPreviewEnabled())
+		{
+			t.clearTile();
+		}
 		
 	}
 
