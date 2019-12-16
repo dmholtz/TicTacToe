@@ -4,7 +4,7 @@ public class Grid {
 	
 	public static final int gridSize = 3;
 	
-	private Tile allTiles[][] = new Tile[gridSize][gridSize];
+	private final Tile allTiles[][] = new Tile[gridSize][gridSize];
 	
 	public Grid()
 	{
