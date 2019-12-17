@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import model.Symbol;
+import ui.Marker;
 import ui.TilePanel;
+import ui.XMarker;
 
 public class UITester implements MouseListener{
 	
@@ -108,9 +110,8 @@ public class UITester implements MouseListener{
 		// TODO Auto-generated method stub
 		System.out.println("Mouse clicked");
 		TilePanel t = (TilePanel)e.getComponent();
-		t.paintSymbol(Symbol.X, Color.BLUE);		
-		//boxes[0].setVisible(true);
-		//boxes[0].repaint();
+		Marker cross = new XMarker(Color.BLUE);
+		t.paintMarker(new XMarker(Color.BLUE));	
 	}
 
 	@Override
@@ -120,7 +121,7 @@ public class UITester implements MouseListener{
 		TilePanel t = (TilePanel)e.getComponent();
 		if(t.isPreviewEnabled())
 		{
-			t.previewSymbol(Symbol.X, Color.BLUE);
+			t.previewMarker(new XMarker(Color.BLUE));
 		}
 			
 	}

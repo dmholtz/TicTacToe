@@ -102,6 +102,25 @@ public class TilePanel extends Canvas {
 		area.subtract(new Area(inner));
 		return area;
 	}
+	
+	public void paintMarker(Marker marker)
+	{
+		this.disablePreview();
+		this.shapeColor = marker.getColor();
+		this.shape = Optional.of(marker.generateShapeForDimension(this.getSize()));
+		super.repaint();
+	}
+	
+	public void previewMarker(Marker marker)
+	{
+		if (!this.isPreviewEnabled())
+		{
+			throw new IllegalCallerException("Previewing symbol has been disabled.");
+		}
+		this.shapeColor = ColorModifier.lightUp(marker.getColor(), 30);
+		this.shape = Optional.of(marker.generateShapeForDimension(this.getSize()));
+		super.repaint();
+	}
 
 	public void paintSymbol(Symbol symbol, Color shapeColor) {
 		this.disablePreview();
