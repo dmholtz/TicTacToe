@@ -47,62 +47,6 @@ public class TilePanel extends Canvas {
 		this.previewEnabled = false;
 	}
 
-	private void defineXShape() {
-		int s = Math.min(this.getSize().width, this.getSize().height) * 9 / 10;
-		int x = s / 15;
-		int xPol[] = new int[12];
-		int yPol[] = new int[12];
-		xPol[0] = 0;
-		xPol[1] = x;
-		xPol[2] = s / 2;
-		xPol[3] = s - x;
-		xPol[4] = s;
-		xPol[5] = s / 2 + x;
-		xPol[6] = s;
-		xPol[7] = s - x;
-		xPol[8] = s / 2;
-		xPol[9] = x;
-		xPol[10] = 0;
-		xPol[11] = s / 2 - x;
-
-		yPol[3] = 0;
-		yPol[4] = x;
-		yPol[5] = s / 2;
-		yPol[6] = s - x;
-		yPol[7] = s;
-		yPol[8] = s / 2 + x;
-		yPol[9] = s;
-		yPol[10] = s - x;
-		yPol[11] = s / 2;
-		yPol[0] = x;
-		yPol[1] = 0;
-		yPol[2] = s / 2 - x;
-
-		for (int i = 0; i < 12; i++) {
-			xPol[i] += (this.getSize().width - s) / 2;
-			yPol[i] += (this.getSize().height - s) / 2;
-		}
-		this.shape = Optional.of(new Polygon(xPol, yPol, 12));
-	}
-
-	public void defineOShape() {
-		double centerX = this.getSize().getWidth() / 2.0;
-		double centerY = this.getSize().getHeight() / 2.0;
-		double radius = Math.min(centerX, centerY) * 9 / 10;
-		double thickness = radius * 0.1;
-		this.shape = Optional.of(createRingShape(centerX, centerY, radius, thickness));
-	}
-
-	private static Shape createRingShape(double centerX, double centerY, double outerRadius, double thickness) {
-		Ellipse2D outer = new Ellipse2D.Double(centerX - outerRadius, centerY - outerRadius, outerRadius + outerRadius,
-				outerRadius + outerRadius);
-		Ellipse2D inner = new Ellipse2D.Double(centerX - outerRadius + thickness, centerY - outerRadius + thickness,
-				outerRadius + outerRadius - thickness - thickness, outerRadius + outerRadius - thickness - thickness);
-		Area area = new Area(outer);
-		area.subtract(new Area(inner));
-		return area;
-	}
-	
 	public void paintMarker(Marker marker)
 	{
 		this.disablePreview();
@@ -120,45 +64,6 @@ public class TilePanel extends Canvas {
 		this.shapeColor = ColorModifier.lightUp(marker.getColor(), 30);
 		this.shape = Optional.of(marker.generateShapeForDimension(this.getSize()));
 		super.repaint();
-	}
-
-	public void paintSymbol(Symbol symbol, Color shapeColor) {
-		this.disablePreview();
-		this.shapeColor = shapeColor;
-		switch (symbol) {
-		case X:
-			defineXShape();
-			break;
-		case O:
-			defineOShape();
-			break;
-		default:
-			this.shape = Optional.empty();
-			break;
-		}
-		super.repaint();
-	}
-	
-	public void previewSymbol(Symbol symbol, Color shapeColor)
-	{
-		if (!this.isPreviewEnabled())
-		{
-			throw new IllegalCallerException("Previewing symbol has been disabled.");
-		}
-		this.shapeColor = ColorModifier.lightUp(shapeColor, 30);
-		switch (symbol) {
-		case X:
-			defineXShape();
-			break;
-		case O:
-			defineOShape();
-			break;
-		default:
-			this.shape = Optional.empty();
-			break;
-		}
-		super.repaint();
-		
 	}
 
 	public void clearTile() {

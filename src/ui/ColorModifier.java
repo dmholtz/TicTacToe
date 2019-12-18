@@ -16,8 +16,8 @@ public final class ColorModifier {
 	 * 
 	 * @param darker: darker color 
 	 * @param percentage: percentage according to which the alpha value is scaled. Percentage must be an integer
-	 * between (including) 0 and 100. The lower the percentage according to which the alpha value is changed,
-	 * the lighter will be the result. If percentage equals 100, the same color is returned.
+	 * between (including) 0 and 100. The lower the percentage parameter, the lighter will be the result. 
+	 * If percentage equals 100, the same color is returned.
 	 * 
 	 * @return lighter color
 	 */
