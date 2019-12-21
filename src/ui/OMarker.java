@@ -5,15 +5,24 @@ import java.awt.Dimension;
 import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.util.Optional;
 
+/**
+ * Inherited from Marker. Represents special O-Markers in Tic Tac Toe game
+ * 
+ * @author David Holtz
+ * @version 1.0
+ *
+ */
 public class OMarker extends Marker {
-	
-	public OMarker (Color color)
-	{
+
+	public OMarker(Color color) {
 		super.setColor(color);
 	}
 
+	/**
+	 * Returns a O-shape which fits the given dimensions. The O-shape is centered
+	 * and takes up 90% of the available space.
+	 */
 	@Override
 	public Shape generateShapeForDimension(Dimension size) {
 		double centerX = size.getWidth() / 2.0;
@@ -22,7 +31,17 @@ public class OMarker extends Marker {
 		double thickness = radius * 0.1;
 		return OMarker.createRingShape(centerX, centerY, radius, thickness);
 	}
-	
+
+	/**
+	 * Static method which creates a ring shape by cutting out a smaller circle from
+	 * a larger circle.
+	 * 
+	 * @param centerX
+	 * @param centerY
+	 * @param outerRadius
+	 * @param thickness
+	 * @return
+	 */
 	private static Shape createRingShape(double centerX, double centerY, double outerRadius, double thickness) {
 		Ellipse2D outer = new Ellipse2D.Double(centerX - outerRadius, centerY - outerRadius, outerRadius + outerRadius,
 				outerRadius + outerRadius);

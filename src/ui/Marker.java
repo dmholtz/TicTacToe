@@ -2,24 +2,40 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Polygon;
 import java.awt.Shape;
-import java.util.Optional;
 
+/**
+ * Abstract specification for markers, which can be drawn on a canvas
+ * (concretely on TilePanels)
+ * 
+ * @author David
+ * @version 1.0
+ *
+ */
 public abstract class Marker {
-	
-	private Shape shape;
+
 	private Color color;
 	
-	public void setColor(Color color)
-	{
+	/**
+	 * Sets the marker's color
+	 * @param color of this marker
+	 */
+	public void setColor(Color color) {
 		this.color = color;
 	}
-	
-	public Color getColor()
-	{
+
+	/** 
+	 * Returns the marker's color
+	 * @return
+	 */
+	public Color getColor() {
 		return this.color;
 	}
-	
-	public abstract Shape generateShapeForDimension(Dimension size) ;
+
+	/**
+	 * Returns a Shape which fits the given dimensions. 
+	 * @param size
+	 * @return
+	 */
+	public abstract Shape generateShapeForDimension(Dimension size);
 }
