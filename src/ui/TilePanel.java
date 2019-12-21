@@ -4,18 +4,9 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Rectangle;
 import java.awt.Shape;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.RoundRectangle2D;
 import java.util.Optional;
-
-import javax.swing.JPanel;
-
-import model.Symbol;
+import datatypes.Coordinate;
 
 public class TilePanel extends Canvas {
 
@@ -25,10 +16,11 @@ public class TilePanel extends Canvas {
 	private Color shapeColor = Color.BLACK;
 	
 	private boolean previewEnabled;
+	private final Coordinate coordinate;
 
-	public TilePanel() {
+	public TilePanel(Coordinate coordinate) {
 		super.setBackground(Color.WHITE);
-		super.setSize(60, 00);
+		this.coordinate = coordinate;
 		this.previewEnabled = true;
 	}
 	
@@ -37,6 +29,13 @@ public class TilePanel extends Canvas {
 		return this.previewEnabled;
 	}
 	
+	/**
+	 * @return the coordinate
+	 */
+	public final Coordinate getCoordinate() {
+		return coordinate;
+	}
+
 	public void enablePreview()
 	{
 		this.previewEnabled = true;
@@ -57,13 +56,21 @@ public class TilePanel extends Canvas {
 	
 	public void previewMarker(Marker marker)
 	{
-		if (!this.isPreviewEnabled())
+		if (this.isPreviewEnabled())
 		{
-			throw new IllegalCallerException("Previewing symbol has been disabled.");
-		}
-		this.shapeColor = ColorModifier.lightUp(marker.getColor(), 30);
-		this.shape = Optional.of(marker.generateShapeForDimension(this.getSize()));
-		super.repaint();
+			this.shapeColor = ColorModifier.lightUp(marker.getColor(), 30);
+			this.shape = Optional.of(marker.generateShapeForDimension(this.getSize()));
+			super.repaint();
+		}	
+	}
+	
+	public void removePreview()
+	{
+		if (this.isPreviewEnabled())
+		{
+			shape = Optional.empty();
+			super.repaint();
+		}	
 	}
 
 	public void clearTile() {

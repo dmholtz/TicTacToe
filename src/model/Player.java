@@ -1,6 +1,8 @@
 package model;
 import java.awt.Color;
 
+import datatypes.Coordinate;
+
 public class Player {
 	
 	private String name;
@@ -13,6 +15,11 @@ public class Player {
 	{
 		this.name = name;
 		this.symbol = symbol;
+	}
+	
+	public void markTile(Coordinate c)
+	{
+		this.markTile(c.getX(), c.getY());
 	}
 	
 	public void markTile(final int x, final int y)
