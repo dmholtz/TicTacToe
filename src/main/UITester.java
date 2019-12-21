@@ -14,11 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import datatypes.Coordinate;
 import model.Symbol;
-import ui.Marker;
-import ui.OMarker;
 import ui.TilePanel;
-import ui.XMarker;
+import ui.markers.Marker;
+import ui.markers.OMarker;
+import ui.markers.XMarker;
 
 public class UITester implements MouseListener{
 	
@@ -62,7 +63,7 @@ public class UITester implements MouseListener{
         
         for (int i = 0; i < 9; i++)
         {
-        	boxes[i] = new TilePanel();
+        	boxes[i] = new TilePanel(new Coordinate(i/3, i%3));
         	boxes[i].setMinimumSize(new Dimension(80,80));
         	boxes[i].setMaximumSize(new Dimension(80,80));
         	// boxes[i].setBackground(Color.WHITE);
@@ -119,9 +120,6 @@ public class UITester implements MouseListener{
 		UITester u = new UITester();
         
 	}
-	
-	// -52
-	// 52: 0
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -151,7 +149,7 @@ public class UITester implements MouseListener{
 		TilePanel t = (TilePanel)e.getComponent();
 		if(t.isPreviewEnabled())
 		{
-			t.clearTile();
+			t.removePreview();
 		}
 		
 	}

@@ -6,7 +6,7 @@ public class Main {
 	
 	public static void main(String[] args)
 	{
-		TicTacToeGame g = new TicTacToeGame();
+		TicTacToeGame myGame = new TicTacToeGame();
 	}
 
 }

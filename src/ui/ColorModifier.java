@@ -2,14 +2,7 @@ package ui;
 
 import java.awt.Color;
 
-public final class ColorModifier {
-	
-	private static int lightUpFactor = 3;
-	
-	public static Color lightUp(Color darker)
-	{
-		return new Color(darker.getRed(), darker.getGreen(), darker.getBlue(), darker.getAlpha()/lightUpFactor);
-	}
+public abstract class ColorModifier {
 	
 	/**
 	 * Lights up a given color by modifying its alpha value.

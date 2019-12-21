@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.util.Optional;
 import datatypes.Coordinate;
+import ui.markers.Marker;
 
 /**
  * TilePanel is a component of the graphical user interface and represents a

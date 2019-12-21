@@ -1,89 +1,99 @@
 package datatypes;
 
 /**
- * Immutable class representing a coordinate tuple in the TicTacToe game.
- * Coordinates are made of an x and a y coordiante
- * are made of a row and a column number.
+ * Represents a coordinate tuple in the TicTacToe game. Coordinate tuples are
+ * made of an x (column) and a y (row) coordinate. In TicTacToe context,
+ * coordinates are between 0 and 2 (including). * 
+ * 
+ * Coordinate is immutable.
+ * 
  * @author David Holtz
+ * @version 1.0
  *
  */
 public final class Coordinate {
 
-    /**
-     * Variable to store the row number.
-     */
-    private final int x;
-    
-    /**
-     * Variable to store the column number.
-     */
-    private final int y;
+	/**
+	 * Variable to store the row number.
+	 */
+	private final int x;
 
-    /** 
-     * Create a new coordinate. In the Tic Tac Toe game, x and y coordiantes are between 0 and 2
-     * 
-     * (0,0) is in the upper left-hand corner. Going to the right increases the x coordinate whereas
-     * goint down increases the y-coordinate
-     * @param x
-     * @param y
-     */
-    public Coordinate(final int x, final int y) {
-        if (x < 0 || y < 0 || x >=3 || y >=3) {
-            throw new IllegalArgumentException("Coordinates exceed TicTacToe Grid");
-        }
-        this.x = x;
-        this.y = y;
-    }
+	/**
+	 * Variable to store the column number.
+	 */
+	private final int y;
 
-    /**
-     * @return The non-negative x coordinate of this coordinate tuple.
-     */
-    public /*@ pure; helper @*/ int getX() {
-        return x;
-    }
+	/**
+	 * Create a new coordinate. In the Tic Tac Toe game, x and y coordiantes are
+	 * between 0 and 2
+	 * 
+	 * (0,0) is in the upper left-hand corner. Going to the right increases the x
+	 * coordinate whereas goint down increases the y-coordinate
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	public Coordinate(final int x, final int y) {
+		if (x < 0 || y < 0 || x >= 3 || y >= 3) {
+			throw new IllegalArgumentException("Coordinates exceed TicTacToe Grid");
+		}
+		this.x = x;
+		this.y = y;
+	}
 
-    /**
-     * @return The non-negative y coordinate of this coordinate tuple.
-     */
-    public /*@ pure; helper @*/ int getY() {
-        return y;
-    }
+	/**
+	 * @return The non-negative x coordinate of this coordinate tuple.
+	 */
+	public /* @ pure; helper @ */ int getX() {
+		return x;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + x;
-        result = prime * result + y;
-        return result;
-    }
+	/**
+	 * @return The non-negative y coordinate of this coordinate tuple.
+	 */
+	public /* @ pure; helper @ */ int getY() {
+		return y;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(final Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Coordinate other = (Coordinate) obj;
-        if (x != other.x) {
-            return false;
-        }
-        if (y != other.y) {
-            return false;
-        }
-        return true;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + x;
+		result = prime * result + y;
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final Coordinate other = (Coordinate) obj;
+		if (x != other.x) {
+			return false;
+		}
+		if (y != other.y) {
+			return false;
+		}
+		return true;
+	}
 
 //    /** 
 //     * Convienience method to create a new location. The rows and column numbers of locations

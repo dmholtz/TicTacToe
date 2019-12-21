@@ -9,14 +9,14 @@ import model.Grid;
 import model.Player;
 import model.Symbol;
 
-public class VirtualTicTacToeGame extends Game {
+public class SimpleTicTacToeGame extends Game {
 
 	protected Player activePlayer;
 	boolean gameStatus = false;
 	private int numberOfMarks = 0;
 	private Optional<Player> winner = Optional.empty();
 
-	public VirtualTicTacToeGame() {
+	public SimpleTicTacToeGame() {
 		this.setDefaultPlayers();
 		activePlayer = (super.player1.get());
 		gameStatus = true;

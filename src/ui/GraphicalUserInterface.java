@@ -12,6 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import datatypes.Coordinate;
+import datatypes.TileUpdateTask;
+import ui.events.UserRequest;
+import ui.events.UserRequestEvent;
+import ui.events.UserRequestEventListener;
 
 public class GraphicalUserInterface implements MouseListener {
 	
@@ -32,8 +36,8 @@ public class GraphicalUserInterface implements MouseListener {
 	
 	private void setupWindow()
 	{
-		applicationWindow = new JFrame("Tic-Tac-Toe Game");
-		applicationWindow.setSize(600, 600);
+		applicationWindow = new JFrame("TicTacToe Game by dmholtz");
+		applicationWindow.setSize(700, 600);
 		applicationWindow.setResizable(false);
 
 		this.setupGamePanel();
@@ -118,7 +122,7 @@ public class GraphicalUserInterface implements MouseListener {
 		this.userRequestEventListeners = listener;
 	}
 	
-	private synchronized void fireUserRequestEvent(Object source, UserRequest requestType)
+	private synchronized void fireUserRequestEvent(Coordinate source, UserRequest requestType)
 	{
 		UserRequestEvent requestEvent = new UserRequestEvent(source, requestType);
 		

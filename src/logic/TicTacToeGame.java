@@ -3,20 +3,20 @@ package logic;
 import java.awt.Color;
 
 import datatypes.Coordinate;
+import datatypes.TileUpdateTask;
 import model.Game;
 import model.Grid;
 import model.Player;
 import model.Symbol;
 import ui.GraphicalUserInterface;
-import ui.Marker;
-import ui.OMarker;
-import ui.TileUpdateTask;
-import ui.UserRequest;
-import ui.UserRequestEvent;
-import ui.UserRequestEventListener;
-import ui.XMarker;
+import ui.events.UserRequest;
+import ui.events.UserRequestEvent;
+import ui.events.UserRequestEventListener;
+import ui.markers.Marker;
+import ui.markers.OMarker;
+import ui.markers.XMarker;
 
-public class TicTacToeGame extends VirtualTicTacToeGame implements UserRequestEventListener {
+public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEventListener {
 	
 	private GraphicalUserInterface gui;
 	
@@ -68,7 +68,7 @@ public class TicTacToeGame extends VirtualTicTacToeGame implements UserRequestEv
 	{
 		if (this.gameStatus)
 		{
-			gui.setStatus(activePlayer.toString()+", it's your turn!");
+			gui.setStatus(activePlayer.getName()+", it's your turn!");
 		}
 		else
 		{
