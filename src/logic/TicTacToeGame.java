@@ -1,7 +1,5 @@
 package logic;
 
-import java.awt.Color;
-
 import datatypes.Coordinate;
 import datatypes.TileUpdateTask;
 import model.Game;
@@ -82,21 +80,4 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 			}
 		}
 	}
-	
-	public void printGrid(Game g) {
-		for (int x = 0; x < Grid.gridSize; x++) {
-			for (int y = 0; y < grid.gridSize; y++) {
-				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		if (this.getWinner().isPresent())
-		{
-			System.out.println("And the winner iiiisss: "+this.getWinner().get().getName());
-		}
-	}
-
-	
-
 }

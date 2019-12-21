@@ -122,4 +122,18 @@ public class SimpleTicTacToeGame extends Game {
 	public boolean isTileEmpty(Coordinate tileCoordinate) {
 		return super.grid.getTileFrom(tileCoordinate).isEmpty();
 	}
+	
+	public void printGrid(Game g) {
+		for (int x = 0; x < Grid.gridSize; x++) {
+			for (int y = 0; y < Grid.gridSize; y++) {
+				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		if (this.getWinner().isPresent())
+		{
+			System.out.println("And the winner iiiisss: "+this.getWinner().get().getName());
+		}
+	}
 }
