@@ -1,0 +1,125 @@
+package logic;
+
+import java.awt.Color;
+import java.util.Optional;
+
+import datatypes.Coordinate;
+import model.Game;
+import model.Grid;
+import model.Player;
+import model.Symbol;
+
+public class VirtualTicTacToeGame extends Game {
+
+	protected Player activePlayer;
+	boolean gameStatus = false;
+	private int numberOfMarks = 0;
+	private Optional<Player> winner = Optional.empty();
+
+	public VirtualTicTacToeGame() {
+		this.setDefaultPlayers();
+		activePlayer = (super.player1.get());
+		gameStatus = true;
+	}
+	
+	private void setDefaultPlayers()
+	{
+		Player player1 = new Player("Player O", Symbol.O, Color.GREEN);
+		Player player2 = new Player("Player X", Symbol.X, Color.RED);
+		this.assignFirstPlayer(player1);
+		this.assignSecondPlayer(player2);
+	}
+
+	public void swapActivePlayer() {
+		if (activePlayer.equals(super.player1.get())) {
+			activePlayer = super.player2.get();
+		} else {
+			activePlayer = super.player1.get();
+		}
+		numberOfMarks++;
+		if(numberOfMarks >= 9)
+		{
+			gameStatus = false;
+		}
+	}
+
+	private boolean hasPlayerWonARow(Player p, int row) {
+		boolean returnVal = true;
+		for (int x = 0; x < Grid.gridSize; x++) {
+			returnVal &= (!this.getGrid().getTileFrom(x, row).isEmpty()
+					&& this.getGrid().getTileFrom(x, row).getMarker().equals(p));
+		}
+		return returnVal;
+	}
+
+	private boolean hasPlayerWonAColumn(Player p, int column) {
+		boolean returnVal = true;
+		for (int y = 0; y < Grid.gridSize; y++) {
+			returnVal &= (!this.getGrid().getTileFrom(column, y).isEmpty()
+					&& this.getGrid().getTileFrom(column, y).getMarker().equals(p));
+		}
+		return returnVal;
+	}
+	
+	private boolean hasPlayerWonFirstDiagonal(Player p)
+	{
+		boolean returnVal = true;
+		for (int i = 0; i< Grid.gridSize; i++) {
+			returnVal &= (!this.getGrid().getTileFrom(i, i).isEmpty()
+					&& this.getGrid().getTileFrom(i, i).getMarker().equals(p));
+		}
+		return returnVal;
+	}
+	
+	private boolean hasPlayerWonSecondDiagonal(Player p)
+	{
+		boolean returnVal = true;
+		for (int i = 0; i< Grid.gridSize; i++) {
+			returnVal &= (!this.getGrid().getTileFrom(Grid.gridSize-i-1, i).isEmpty()
+					&& this.getGrid().getTileFrom(Grid.gridSize-i-1, i).getMarker().equals(p));
+		}
+		return returnVal;
+	}
+
+	private boolean isPlayerWinner(Player p) {
+		for (int i = 0; i < Grid.gridSize; i++) {
+			if (this.hasPlayerWonARow(p, i)) {
+				return true;
+			}
+		}
+		for (int i = 0; i < Grid.gridSize; i++) {
+			if (this.hasPlayerWonAColumn(p, i)) {
+				return true;
+			}
+		}
+		if (this.hasPlayerWonFirstDiagonal(p)) {
+			return true;
+		}
+		if (this.hasPlayerWonSecondDiagonal(p)) {
+			return true;
+		}
+		return false;
+	}
+
+	public void determineWinner()
+	{
+		if (isPlayerWinner(this.player1.get()))
+		{
+			winner = Optional.of(this.player1.get());
+			gameStatus = false;
+		}
+		else if (isPlayerWinner(this.player2.get()))
+		{
+			winner = Optional.of(this.player2.get());
+			gameStatus = false;
+		}
+	}
+
+	public Optional<Player> getWinner() {
+		return this.winner;
+	}
+
+	public boolean isTileEmpty(Coordinate tileCoordinate) {
+		return super.grid.getTileFrom(tileCoordinate).isEmpty();
+	}
+}

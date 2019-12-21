@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -20,6 +21,8 @@ public class GraphicalUserInterface implements MouseListener {
 	private JPanel gamePanel;
 	private JPanel controlPanel;
 	
+	private JLabel statusLabel;
+	
 	private UserRequestEventListener userRequestEventListeners;
 	
 	public GraphicalUserInterface()
@@ -30,7 +33,7 @@ public class GraphicalUserInterface implements MouseListener {
 	private void setupWindow()
 	{
 		applicationWindow = new JFrame("Tic-Tac-Toe Game");
-		applicationWindow.setSize(800, 500);
+		applicationWindow.setSize(600, 600);
 		applicationWindow.setResizable(false);
 
 		this.setupGamePanel();
@@ -39,7 +42,8 @@ public class GraphicalUserInterface implements MouseListener {
 		
 		this.addTilesToGamePanel();
 		
-		applicationWindow.setVisible(true);        
+		applicationWindow.setVisible(true);
+		applicationWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	private void setupGamePanel()
@@ -54,17 +58,18 @@ public class GraphicalUserInterface implements MouseListener {
 	private void setupControlPanel()
 	{
 		controlPanel = new JPanel();
-		controlPanel.setBackground(Color.yellow);
-        JLabel labelGelb = new JLabel("Ich bin auf der gelben Seite");
-        controlPanel.add(labelGelb);
+		controlPanel.setBackground(Color.white);
+        statusLabel = new JLabel("Tic Tac Toe");
+        statusLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 24));
+        controlPanel.add(statusLabel);
 	}
 	
 	private void mergeAndAddPanels()
 	{
-		JSplitPane splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, false);        
-        splitpane.setResizeWeight(0.8);
-        splitpane.setLeftComponent(this.gamePanel);
-        splitpane.setRightComponent(this.controlPanel);     
+		JSplitPane splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);        
+        splitpane.setResizeWeight(0.05);
+        splitpane.setRightComponent(this.gamePanel);
+        splitpane.setLeftComponent(this.controlPanel);     
         splitpane.setEnabled(false);
 
         applicationWindow.add(splitpane);
@@ -82,6 +87,11 @@ public class GraphicalUserInterface implements MouseListener {
 				this.gamePanel.add(allTiles[i][j]);
 			}
         }
+	}
+	
+	public void setStatus(String text)
+	{
+		statusLabel.setText(text);
 	}
 	
 	public void updateGame(TileUpdateTask task)

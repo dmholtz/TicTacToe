@@ -2,11 +2,14 @@ package model;
 import java.awt.Color;
 
 import datatypes.Coordinate;
+import ui.Marker;
+import ui.OMarker;
+import ui.XMarker;
 
 public class Player {
 	
 	private String name;
-	//private Color color;
+	private Color color = Color.BLACK;
 	private Symbol symbol;
 	
 	private Game game;
@@ -15,6 +18,13 @@ public class Player {
 	{
 		this.name = name;
 		this.symbol = symbol;
+	}
+	
+	public Player(String name, Symbol symbol, Color color)
+	{
+		this.name = name;
+		this.symbol = symbol;
+		this.color = color;
 	}
 	
 	public void markTile(Coordinate c)
@@ -57,9 +67,22 @@ public class Player {
 		return this.symbol;
 	}
 	
+	/**
+	 * @return the color
+	 */
+	public final Color getColor() {
+		return color;
+	}
+	
 	public void assignGame(Game assignedGame)
 	{
 		this.game = assignedGame;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return this.getName();
 	}
 
 }

@@ -1,5 +1,7 @@
 package model;
 
+import datatypes.Coordinate;
+
 public class Grid {
 	
 	public static final int gridSize = 3;
@@ -24,6 +26,11 @@ public class Grid {
 			throw new IllegalArgumentException("Given tile is not within the boundries of this grid.");
 		}
 		return allTiles[x][y];
+	}
+	
+	public Tile getTileFrom(Coordinate c)
+	{
+		return this.getTileFrom(c.getX(), c.getY());
 	}
 
 }
