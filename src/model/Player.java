@@ -9,7 +9,7 @@ import datatypes.Coordinate;
  * Players are "actors" in a TicTacToe game. Every player has a name, a color, a
  * symbol and might be part of a game.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */
@@ -19,7 +19,7 @@ public class Player {
 	private Color color = Color.BLACK;
 	private Symbol symbol;
 
-	private Optional<Game> game = Optional.empty();
+	protected Optional<Game> game = Optional.empty();
 
 	/**
 	 * Set up a player with name and symbol. Color attribute will be default color.

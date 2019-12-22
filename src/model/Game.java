@@ -89,5 +89,25 @@ public abstract class Game {
 	{
 		return this.player1.isPresent() && this.player2.isPresent();
 	}
+	
+	/**
+	 * Returns the number of tiles which have been marked
+	 * @return
+	 */
+	public int getNumberOfMarkers()
+	{
+		int numberOfMarkers = 0;
+		for (int i = 0; i < Grid.gridSize; i++)
+		{
+			for (int j = 0; j < Grid.gridSize; j++)
+			{
+				if(!this.grid.getTileFrom(i, j).isEmpty())
+				{
+					numberOfMarkers++;
+				}
+			}
+		}
+		return numberOfMarkers;
+	}
 
 }

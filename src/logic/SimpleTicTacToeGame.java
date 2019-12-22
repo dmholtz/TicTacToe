@@ -11,36 +11,47 @@ import model.Symbol;
 
 public class SimpleTicTacToeGame extends Game {
 
-	protected Player activePlayer;
-	boolean gameStatus = false;
-	private int numberOfMarks = 0;
+	private Player activePlayer;
+	boolean gameStatus = true;
 	private Optional<Player> winner = Optional.empty();
 
 	public SimpleTicTacToeGame() {
-		this.setDefaultPlayers();
-		activePlayer = (super.player1.get());
 		gameStatus = true;
 	}
 	
-	private void setDefaultPlayers()
+	protected void setDefaultPlayers()
 	{
 		Player player1 = new Player("Player O", Symbol.O, Color.GREEN);
 		Player player2 = new Player("Player X", Symbol.X, Color.RED);
 		this.assignFirstPlayer(player1);
 		this.assignSecondPlayer(player2);
+		activePlayer = (this.player1.get());
 	}
 
 	public void swapActivePlayer() {
-		if (activePlayer.equals(super.player1.get())) {
-			activePlayer = super.player2.get();
+		if (activePlayer.equals(this.player1.get())) {
+			activePlayer = this.player2.get();
 		} else {
-			activePlayer = super.player1.get();
+			activePlayer = this.player1.get();
 		}
-		numberOfMarks++;
-		if(numberOfMarks >= 9)
+		/*if(this.getNumberOfMarkers() >= 9)
 		{
 			gameStatus = false;
-		}
+		}*/
+	}
+
+	/**
+	 * @return the activePlayer
+	 */
+	public final Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	/**
+	 * @param activePlayer the activePlayer to set
+	 */
+	public final void setActivePlayer(Player activePlayer) {
+		this.activePlayer = activePlayer;
 	}
 
 	private boolean hasPlayerWonARow(Player p, int row) {
@@ -113,6 +124,22 @@ public class SimpleTicTacToeGame extends Game {
 			winner = Optional.of(this.player2.get());
 			gameStatus = false;
 		}
+		else
+		{
+			winner = Optional.empty();
+			if (this.getNumberOfMarkers() >= 9)
+			{
+				gameStatus = false;
+			}
+			else {
+				gameStatus = true;
+			}
+		}
+	}
+	
+	public boolean isGameActive()
+	{
+		return this.gameStatus;
 	}
 
 	public Optional<Player> getWinner() {
@@ -120,6 +147,25 @@ public class SimpleTicTacToeGame extends Game {
 	}
 
 	public boolean isTileEmpty(Coordinate tileCoordinate) {
-		return super.grid.getTileFrom(tileCoordinate).isEmpty();
+		return this.grid.getTileFrom(tileCoordinate).isEmpty();
+	}
+	
+	public void printGrid(Game g) {
+		for (int x = 0; x < Grid.gridSize; x++) {
+			for (int y = 0; y < Grid.gridSize; y++) {
+				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
+			}
+			System.out.println();
+		}
+		
+		if (this.getWinner().isPresent())
+		{
+			System.out.println("And the winner iiiisss: "+this.getWinner().get().getName());
+		}
+		else if(!gameStatus)
+		{
+			System.out.println("Draw");
+		}
+		System.out.println();
 	}
 }

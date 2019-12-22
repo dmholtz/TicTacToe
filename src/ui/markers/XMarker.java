@@ -8,7 +8,7 @@ import java.awt.Shape;
 /**
  * Inherited from Marker. Represents special X-Markers in Tic Tac Toe game
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

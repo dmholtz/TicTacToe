@@ -7,7 +7,7 @@ package datatypes;
  * 
  * Coordinate is immutable.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */
@@ -93,6 +93,12 @@ public final class Coordinate {
 			return false;
 		}
 		return true;
+	}
+	
+	@Override
+	public String toString()
+	{
+		return "("+this.getX()+"|"+this.getY()+")";
 	}
 
 //    /** 

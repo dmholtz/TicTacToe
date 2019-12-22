@@ -9,7 +9,7 @@ import java.awt.geom.Ellipse2D;
 /**
  * Inherited from Marker. Represents special O-Markers in Tic Tac Toe game
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

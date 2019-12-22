@@ -2,10 +2,11 @@ package logic;
 
 import java.awt.Color;
 
+import javax.swing.JOptionPane;
+
 import datatypes.Coordinate;
 import datatypes.TileUpdateTask;
-import model.Game;
-import model.Grid;
+import model.ComputerPlayer;
 import model.Player;
 import model.Symbol;
 import ui.GraphicalUserInterface;
@@ -22,8 +23,11 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	
 	public TicTacToeGame ()
 	{
+		super.setDefaultPlayers();
 		this.gui = new GraphicalUserInterface();
+		this.gui.requestAndSetPlayers(this);
 		this.gui.setUserRequestEventListener(this);
+		this.controlGameFlow();
 		this.updateStatus();
 	}
 	
@@ -38,6 +42,26 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 			return new OMarker(player.getColor());
 		}
 	}
+	
+	public void controlGameFlow()
+	{
+		if (this.isGameActive())
+		{
+			if (this.getActivePlayer() instanceof ComputerPlayer)
+			{
+				ComputerPlayer currentPlayer = (ComputerPlayer) this.getActivePlayer();
+				Coordinate c = currentPlayer.selectTileAutomatically();
+				currentPlayer.markTile(c);
+				Marker marker = generateMarkerForPlayer(currentPlayer);
+				TileUpdateTask task = new TileUpdateTask(c, UserRequest.MARK_TILE, marker);
+				gui.updateGame(task);
+				this.determineWinner();
+				this.updateStatus();
+				this.swapActivePlayer();
+				this.controlGameFlow();
+			}
+		}	
+	}
 
 	@Override
 	public void requestReceived(UserRequestEvent incomingEvent) {
@@ -45,7 +69,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		Coordinate requestedTileCoordinate = incomingEvent.getSource();
 		UserRequest requestType = incomingEvent.getRequestType();
 		
-		Marker marker = generateMarkerForPlayer(super.activePlayer);
+		Marker marker = generateMarkerForPlayer(this.getActivePlayer());
 		
 		if (super.isTileEmpty(requestedTileCoordinate)&& this.gameStatus)	
 		{
@@ -54,10 +78,11 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 			
 			if (requestType.equals(UserRequest.MARK_TILE) )
 			{
-				activePlayer.markTile(requestedTileCoordinate);
+				this.getActivePlayer().markTile(requestedTileCoordinate);
 				this.swapActivePlayer();
 				
 				this.determineWinner();
+				this.controlGameFlow();
 				this.printGrid(this);
 				this.updateStatus();
 			}	
@@ -68,7 +93,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	{
 		if (this.gameStatus)
 		{
-			gui.setStatus(activePlayer.getName()+", it's your turn!");
+			gui.setStatus(this.getActivePlayer().getName()+", it's your turn!");
 		}
 		else
 		{
@@ -82,21 +107,4 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 			}
 		}
 	}
-	
-	public void printGrid(Game g) {
-		for (int x = 0; x < Grid.gridSize; x++) {
-			for (int y = 0; y < grid.gridSize; y++) {
-				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
-			}
-			System.out.println();
-		}
-		System.out.println();
-		if (this.getWinner().isPresent())
-		{
-			System.out.println("And the winner iiiisss: "+this.getWinner().get().getName());
-		}
-	}
-
-	
-
 }

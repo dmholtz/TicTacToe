@@ -14,7 +14,7 @@ import ui.markers.Marker;
  * single tile in the grid. Shapes can be drawn on every instance of this class,
  * since TilePanel extends java.awt.Canvas
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

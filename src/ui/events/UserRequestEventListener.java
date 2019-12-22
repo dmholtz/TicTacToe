@@ -2,7 +2,7 @@ package ui.events;
 
 /**
  * Interface for UserRequestEvent handling
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */
