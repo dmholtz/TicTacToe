@@ -5,14 +5,21 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Optional;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import datatypes.Coordinate;
 import datatypes.TileUpdateTask;
+import logic.SimpleTicTacToeGame;
+import model.ComputerPlayer;
+import model.Game;
+import model.Player;
+import model.Symbol;
 import ui.events.UserRequest;
 import ui.events.UserRequestEvent;
 import ui.events.UserRequestEventListener;
@@ -27,7 +34,7 @@ public class GraphicalUserInterface implements MouseListener {
 	
 	private JLabel statusLabel;
 	
-	private UserRequestEventListener userRequestEventListeners;
+	private Optional<UserRequestEventListener> userRequestEventListeners = Optional.empty();
 	
 	public GraphicalUserInterface()
 	{
@@ -93,6 +100,38 @@ public class GraphicalUserInterface implements MouseListener {
         }
 	}
 	
+	public void requestAndSetPlayers(SimpleTicTacToeGame game)
+	{
+		int response = JOptionPane.showOptionDialog(applicationWindow, "Select the first player:","Game configurator",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, 
+                new String[]{"Human", "Computer"}, "Human");
+		
+		if (response == JOptionPane.YES_OPTION)
+		{
+			game.assignFirstPlayer(new Player("Player O", Symbol.O, Color.GREEN));
+		}
+		else
+		{
+			game.assignFirstPlayer(new ComputerPlayer("Computer O", Symbol.O, Color.GREEN));
+		}
+		
+		response = JOptionPane.showOptionDialog(applicationWindow, "Select the second player:","Game configurator",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE, null, 
+                new String[]{"Human", "Computer"}, "Human");
+		
+		if (response == JOptionPane.YES_OPTION)
+		{
+			game.assignSecondPlayer(new Player("Player X", Symbol.X, Color.RED));
+		}
+		else
+		{
+			game.assignSecondPlayer(new ComputerPlayer("Computer X", Symbol.X, Color.RED));
+		}
+		game.setActivePlayer(game.getFirstPlayer());
+	}
+	
 	public void setStatus(String text)
 	{
 		statusLabel.setText(text);
@@ -119,14 +158,17 @@ public class GraphicalUserInterface implements MouseListener {
 	
 	public synchronized void setUserRequestEventListener(UserRequestEventListener listener)
 	{
-		this.userRequestEventListeners = listener;
+		this.userRequestEventListeners = Optional.of(listener);
 	}
 	
 	private synchronized void fireUserRequestEvent(Coordinate source, UserRequest requestType)
 	{
 		UserRequestEvent requestEvent = new UserRequestEvent(source, requestType);
 		
-		this.userRequestEventListeners.requestReceived(requestEvent);
+		if (this.userRequestEventListeners.isPresent())
+		{
+			this.userRequestEventListeners.get().requestReceived(requestEvent);
+		}	
 	}
 	
 	private Coordinate retrieveSourceTileCoordinate(MouseEvent e)

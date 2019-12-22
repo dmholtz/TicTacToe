@@ -2,7 +2,7 @@ package ui.events;
 
 /**
  * Enumeration of UserRequests
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

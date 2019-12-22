@@ -6,7 +6,7 @@ import datatypes.Coordinate;
  * Represents the organisation of the TicTacToe grid. Every TicTacToe game has 9
  * tiles, which are arranged in three rows and three columns.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @verson 1.0
  *
  */

@@ -16,7 +16,6 @@ public class SimpleTicTacToeGame extends Game {
 	private Optional<Player> winner = Optional.empty();
 
 	public SimpleTicTacToeGame() {
-		//this.setDefaultPlayers();		
 		gameStatus = true;
 	}
 	

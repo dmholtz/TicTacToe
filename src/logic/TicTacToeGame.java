@@ -1,7 +1,12 @@
 package logic;
 
+import java.awt.Color;
+
+import javax.swing.JOptionPane;
+
 import datatypes.Coordinate;
 import datatypes.TileUpdateTask;
+import model.ComputerPlayer;
 import model.Player;
 import model.Symbol;
 import ui.GraphicalUserInterface;
@@ -18,8 +23,11 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	
 	public TicTacToeGame ()
 	{
+		super.setDefaultPlayers();
 		this.gui = new GraphicalUserInterface();
+		this.gui.requestAndSetPlayers(this);
 		this.gui.setUserRequestEventListener(this);
+		this.controlGameFlow();
 		this.updateStatus();
 	}
 	
@@ -33,6 +41,26 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		{
 			return new OMarker(player.getColor());
 		}
+	}
+	
+	public void controlGameFlow()
+	{
+		if (this.isGameActive())
+		{
+			if (this.getActivePlayer() instanceof ComputerPlayer)
+			{
+				ComputerPlayer currentPlayer = (ComputerPlayer) this.getActivePlayer();
+				Coordinate c = currentPlayer.selectTileAutomatically();
+				currentPlayer.markTile(c);
+				Marker marker = generateMarkerForPlayer(currentPlayer);
+				TileUpdateTask task = new TileUpdateTask(c, UserRequest.MARK_TILE, marker);
+				gui.updateGame(task);
+				this.determineWinner();
+				this.updateStatus();
+				this.swapActivePlayer();
+				this.controlGameFlow();
+			}
+		}	
 	}
 
 	@Override
@@ -54,6 +82,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 				this.swapActivePlayer();
 				
 				this.determineWinner();
+				this.controlGameFlow();
 				this.printGrid(this);
 				this.updateStatus();
 			}	

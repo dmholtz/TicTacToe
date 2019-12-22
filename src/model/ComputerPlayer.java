@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -14,6 +15,10 @@ public class ComputerPlayer extends Player {
 	
 	public ComputerPlayer(String name, Symbol symbol) {
 		super(name, symbol);
+	}
+	
+	public ComputerPlayer(String name, Symbol symbol, Color color) {
+		super(name, symbol, color);
 	}
 	
 	public void removeMarker(final int x, final int y)
@@ -150,12 +155,14 @@ public class ComputerPlayer extends Player {
 	
 	private Selection assumeWortsCase(final LinkedList<Selection> selections)
 	{
+		Collections.shuffle(selections); // fun way to demonstrate different results
 		Collections.sort(selections, new SelectionComparator());
 		return selections.peekFirst();
 	}
 	
 	private Selection assumeBestCase(final LinkedList<Selection> selections)
 	{
+		Collections.shuffle(selections); // fun way to demonstrate different results
 		Collections.sort(selections, new SelectionComparator());
 		return selections.peekLast();
 	}

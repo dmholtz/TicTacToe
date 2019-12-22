@@ -12,7 +12,7 @@ import datatypes.Coordinate;
  * 
  * UserRequestEvent is immutable.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

@@ -7,7 +7,7 @@ package datatypes;
  * 
  * Coordinate is immutable.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

@@ -9,7 +9,7 @@ import datatypes.Coordinate;
  * Players are "actors" in a TicTacToe game. Every player has a name, a color, a
  * symbol and might be part of a game.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */

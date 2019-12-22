@@ -6,7 +6,7 @@ import java.util.Optional;
  * A TicTacToe consists of nine tiles. Each of the tile can be marked by either
  * of the two players involved in a game. A tile might also be empty.
  * 
- * @author David Holtz
+ * @author dmholtz
  * @version 1.0
  *
  */
