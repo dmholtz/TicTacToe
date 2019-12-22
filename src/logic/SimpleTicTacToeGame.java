@@ -18,9 +18,8 @@ public class SimpleTicTacToeGame extends Game {
 	public SimpleTicTacToeGame() {
 		gameStatus = true;
 	}
-	
-	protected void setDefaultPlayers()
-	{
+
+	protected void setDefaultPlayers() {
 		Player player1 = new Player("Player O", Symbol.O, Color.GREEN);
 		Player player2 = new Player("Player X", Symbol.X, Color.RED);
 		this.assignFirstPlayer(player1);
@@ -34,10 +33,9 @@ public class SimpleTicTacToeGame extends Game {
 		} else {
 			activePlayer = this.player1.get();
 		}
-		/*if(this.getNumberOfMarkers() >= 9)
-		{
-			gameStatus = false;
-		}*/
+		/*
+		 * if(this.getNumberOfMarkers() >= 9) { gameStatus = false; }
+		 */
 	}
 
 	/**
@@ -71,23 +69,21 @@ public class SimpleTicTacToeGame extends Game {
 		}
 		return returnVal;
 	}
-	
-	private boolean hasPlayerWonFirstDiagonal(Player p)
-	{
+
+	private boolean hasPlayerWonFirstDiagonal(Player p) {
 		boolean returnVal = true;
-		for (int i = 0; i< Grid.gridSize; i++) {
+		for (int i = 0; i < Grid.gridSize; i++) {
 			returnVal &= (!this.getGrid().getTileFrom(i, i).isEmpty()
 					&& this.getGrid().getTileFrom(i, i).getMarker().equals(p));
 		}
 		return returnVal;
 	}
-	
-	private boolean hasPlayerWonSecondDiagonal(Player p)
-	{
+
+	private boolean hasPlayerWonSecondDiagonal(Player p) {
 		boolean returnVal = true;
-		for (int i = 0; i< Grid.gridSize; i++) {
-			returnVal &= (!this.getGrid().getTileFrom(Grid.gridSize-i-1, i).isEmpty()
-					&& this.getGrid().getTileFrom(Grid.gridSize-i-1, i).getMarker().equals(p));
+		for (int i = 0; i < Grid.gridSize; i++) {
+			returnVal &= (!this.getGrid().getTileFrom(Grid.gridSize - i - 1, i).isEmpty()
+					&& this.getGrid().getTileFrom(Grid.gridSize - i - 1, i).getMarker().equals(p));
 		}
 		return returnVal;
 	}
@@ -112,33 +108,24 @@ public class SimpleTicTacToeGame extends Game {
 		return false;
 	}
 
-	public void determineWinner()
-	{
-		if (isPlayerWinner(this.player1.get()))
-		{
+	public void determineWinner() {
+		if (isPlayerWinner(this.player1.get())) {
 			winner = Optional.of(this.player1.get());
 			gameStatus = false;
-		}
-		else if (isPlayerWinner(this.player2.get()))
-		{
+		} else if (isPlayerWinner(this.player2.get())) {
 			winner = Optional.of(this.player2.get());
 			gameStatus = false;
-		}
-		else
-		{
+		} else {
 			winner = Optional.empty();
-			if (this.getNumberOfMarkers() >= 9)
-			{
+			if (this.getNumberOfMarkers() >= 9) {
 				gameStatus = false;
-			}
-			else {
+			} else {
 				gameStatus = true;
 			}
 		}
 	}
-	
-	public boolean isGameActive()
-	{
+
+	public boolean isGameActive() {
 		return this.gameStatus;
 	}
 
@@ -149,23 +136,34 @@ public class SimpleTicTacToeGame extends Game {
 	public boolean isTileEmpty(Coordinate tileCoordinate) {
 		return this.grid.getTileFrom(tileCoordinate).isEmpty();
 	}
-	
+
 	public void printGrid(Game g) {
 		for (int x = 0; x < Grid.gridSize; x++) {
 			for (int y = 0; y < Grid.gridSize; y++) {
-				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
+				System.out.print(g.getGrid().getTileFrom(x, y).toString() + " ");
 			}
 			System.out.println();
 		}
-		
-		if (this.getWinner().isPresent())
-		{
-			System.out.println("And the winner iiiisss: "+this.getWinner().get().getName());
-		}
-		else if(!gameStatus)
-		{
+
+		if (this.getWinner().isPresent()) {
+			System.out.println("And the winner iiiisss: " + this.getWinner().get().getName());
+		} else if (!gameStatus) {
 			System.out.println("Draw");
 		}
 		System.out.println();
+	}
+
+	/**
+	 * Resets a SimpleTicTacToe Game by resetting all the inherited game attributes.
+	 * Moreover, the gameStatus is set true, activePlayer will be a null-pointer and
+	 * the optional winner attribute is empty
+	 */
+	@Override
+	public void resetGame() {
+		super.resetGame();
+		gameStatus = true;
+		activePlayer = null;
+		this.winner = Optional.empty();
+
 	}
 }

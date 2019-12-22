@@ -7,7 +7,7 @@ public abstract class Game {
 	protected Optional<Player> player1 = Optional.empty();
 	protected Optional<Player> player2 = Optional.empty();
 
-	protected final Grid grid;
+	protected Grid grid;
 
 	public Game() {
 		this.grid = new Grid();
@@ -34,16 +34,15 @@ public abstract class Game {
 			throw new IllegalArgumentException("Symbol is already in use. Assign a player with a different symbol");
 		}
 	}
-	
+
 	/**
-	 * Returns the first player, provided that he has been assigned.
-	 * Otherwise, an exception is thrown
+	 * Returns the first player, provided that he has been assigned. Otherwise, an
+	 * exception is thrown
+	 * 
 	 * @return
 	 */
-	public Player getFirstPlayer()
-	{
-		if (player1.isEmpty())
-		{
+	public Player getFirstPlayer() {
+		if (player1.isEmpty()) {
 			throw new IllegalCallerException("First player has not been assigned yet.");
 		}
 		return player1.get();
@@ -66,48 +65,54 @@ public abstract class Game {
 			throw new IllegalArgumentException("Symbol is already in use. Assign a player with a different symbol");
 		}
 	}
-	
+
 	/**
-	 * Returns the second player, provided that he has been assigned.
-	 * Otherwise, an exception is thrown.
+	 * Returns the second player, provided that he has been assigned. Otherwise, an
+	 * exception is thrown.
+	 * 
 	 * @return
 	 */
-	public Player getSecondPlayer()
-	{
-		if (player2.isEmpty())
-		{
+	public Player getSecondPlayer() {
+		if (player2.isEmpty()) {
 			throw new IllegalCallerException("Second player has not been assigned yet.");
 		}
 		return player2.get();
 	}
-	
+
 	/**
 	 * Returns whether game is initialized with players
+	 * 
 	 * @return
 	 */
-	public boolean isInitialized()
-	{
+	public boolean isInitialized() {
 		return this.player1.isPresent() && this.player2.isPresent();
 	}
-	
+
 	/**
 	 * Returns the number of tiles which have been marked
+	 * 
 	 * @return
 	 */
-	public int getNumberOfMarkers()
-	{
+	public int getNumberOfMarkers() {
 		int numberOfMarkers = 0;
-		for (int i = 0; i < Grid.gridSize; i++)
-		{
-			for (int j = 0; j < Grid.gridSize; j++)
-			{
-				if(!this.grid.getTileFrom(i, j).isEmpty())
-				{
+		for (int i = 0; i < Grid.gridSize; i++) {
+			for (int j = 0; j < Grid.gridSize; j++) {
+				if (!this.grid.getTileFrom(i, j).isEmpty()) {
 					numberOfMarkers++;
 				}
 			}
 		}
 		return numberOfMarkers;
+	}
+
+	/**
+	 * Resets the game by creating a new grid and sets the optional player
+	 * attributes to empty.
+	 */
+	public void resetGame() {
+		this.grid = new Grid();
+		this.player1 = Optional.empty();
+		this.player2 = Optional.empty();
 	}
 
 }
