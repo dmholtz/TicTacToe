@@ -94,6 +94,12 @@ public final class Coordinate {
 		}
 		return true;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return "("+this.getX()+"|"+this.getY()+")";
+	}
 
 //    /** 
 //     * Convienience method to create a new location. The rows and column numbers of locations

@@ -19,7 +19,7 @@ public class Player {
 	private Color color = Color.BLACK;
 	private Symbol symbol;
 
-	private Optional<Game> game = Optional.empty();
+	protected Optional<Game> game = Optional.empty();
 
 	/**
 	 * Set up a player with name and symbol. Color attribute will be default color.
