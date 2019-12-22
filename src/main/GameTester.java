@@ -1,15 +1,15 @@
 package main;
 
 import model.Game;
+import model.Grid;
 import model.Player;
 import model.Symbol;
-import model.Tile;
 
 public class GameTester extends Game {
 
 	public void printGrid(Game g) {
-		for (int x = 0; x < grid.gridSize; x++) {
-			for (int y = 0; y < grid.gridSize; y++) {
+		for (int x = 0; x < Grid.gridSize; x++) {
+			for (int y = 0; y < Grid.gridSize; y++) {
 				System.out.print(g.getGrid().getTileFrom(x, y).toString()+" ");
 			}
 			System.out.println();
