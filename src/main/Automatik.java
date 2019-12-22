@@ -103,11 +103,11 @@ public class Automatik extends SimpleTicTacToeGame {
 		System.out.println("assuming worst case....");
 		for (Selection s : selections)
 		{
-			System.out.println(s.getC().toString()+" "+s.getResult());
+			System.out.println(s.getCoordinate().toString()+" "+s.getResult());
 		}
 		System.out.print("Chosse: ");
 		Selection s = selections.peekFirst();
-		System.out.println(s.getC().toString()+" "+s.getResult());
+		System.out.println(s.getCoordinate().toString()+" "+s.getResult());
 		return selections.peekFirst();
 	}
 	
@@ -157,7 +157,7 @@ public class Automatik extends SimpleTicTacToeGame {
 
 		System.out.println("Start");
 		Automatik a = new Automatik(s);
-		Coordinate choice = a.choose().getC();
+		Coordinate choice = a.choose().getCoordinate();
 		System.out.println("Vorher");
 		s.printGrid(s);
 		System.out.println("Ergebnis:");

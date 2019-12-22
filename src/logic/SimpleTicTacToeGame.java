@@ -11,22 +11,22 @@ import model.Symbol;
 
 public class SimpleTicTacToeGame extends Game {
 
-	public Player activePlayer;
+	private Player activePlayer;
 	boolean gameStatus = true;
 	private Optional<Player> winner = Optional.empty();
 
 	public SimpleTicTacToeGame() {
-		this.setDefaultPlayers();
-		activePlayer = (this.player1.get());
+		//this.setDefaultPlayers();		
 		gameStatus = true;
 	}
 	
-	private void setDefaultPlayers()
+	protected void setDefaultPlayers()
 	{
 		Player player1 = new Player("Player O", Symbol.O, Color.GREEN);
 		Player player2 = new Player("Player X", Symbol.X, Color.RED);
 		this.assignFirstPlayer(player1);
 		this.assignSecondPlayer(player2);
+		activePlayer = (this.player1.get());
 	}
 
 	public void swapActivePlayer() {
@@ -39,6 +39,20 @@ public class SimpleTicTacToeGame extends Game {
 		{
 			gameStatus = false;
 		}*/
+	}
+
+	/**
+	 * @return the activePlayer
+	 */
+	public final Player getActivePlayer() {
+		return activePlayer;
+	}
+
+	/**
+	 * @param activePlayer the activePlayer to set
+	 */
+	public final void setActivePlayer(Player activePlayer) {
+		this.activePlayer = activePlayer;
 	}
 
 	private boolean hasPlayerWonARow(Player p, int row) {
@@ -124,7 +138,7 @@ public class SimpleTicTacToeGame extends Game {
 		}
 	}
 	
-	public boolean getGameStatus()
+	public boolean isGameActive()
 	{
 		return this.gameStatus;
 	}

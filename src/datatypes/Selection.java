@@ -14,7 +14,7 @@ public final class Selection {
 	/**
 	 * @return the c
 	 */
-	public final Coordinate getC() {
+	public final Coordinate getCoordinate() {
 		return c;
 	}
 

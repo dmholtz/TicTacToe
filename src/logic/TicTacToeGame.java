@@ -2,8 +2,6 @@ package logic;
 
 import datatypes.Coordinate;
 import datatypes.TileUpdateTask;
-import model.Game;
-import model.Grid;
 import model.Player;
 import model.Symbol;
 import ui.GraphicalUserInterface;
@@ -43,7 +41,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		Coordinate requestedTileCoordinate = incomingEvent.getSource();
 		UserRequest requestType = incomingEvent.getRequestType();
 		
-		Marker marker = generateMarkerForPlayer(super.activePlayer);
+		Marker marker = generateMarkerForPlayer(this.getActivePlayer());
 		
 		if (super.isTileEmpty(requestedTileCoordinate)&& this.gameStatus)	
 		{
@@ -52,7 +50,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 			
 			if (requestType.equals(UserRequest.MARK_TILE) )
 			{
-				activePlayer.markTile(requestedTileCoordinate);
+				this.getActivePlayer().markTile(requestedTileCoordinate);
 				this.swapActivePlayer();
 				
 				this.determineWinner();
@@ -66,7 +64,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	{
 		if (this.gameStatus)
 		{
-			gui.setStatus(activePlayer.getName()+", it's your turn!");
+			gui.setStatus(this.getActivePlayer().getName()+", it's your turn!");
 		}
 		else
 		{
