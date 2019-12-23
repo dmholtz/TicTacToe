@@ -113,7 +113,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		TileUpdateTask task = new TileUpdateTask(c, UserRequest.MARK_TILE, marker);
 		gui.updateGame(task);
 		try {
-			Thread.sleep(300);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +135,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	private void finishMove() {
 		this.swapActivePlayer();
 		this.determineWinner();
-		this.printGrid(this);
+		this.printGrid();
 		this.updateStatus();
 		this.monitorGameStatus();
 	}

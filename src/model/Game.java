@@ -122,6 +122,20 @@ public abstract class Game {
 	public boolean isTileEmptyAt(Coordinate tileCoordinate) {
 		return this.grid.getTileFrom(tileCoordinate).isEmpty();
 	}
+	
+	/**
+	 * Prints the grid of this game on the console
+	 */
+	public void printGrid() {
+		System.out.println("Grid:");
+		for (int x = 0; x < Grid.gridSize; x++) {
+			for (int y = 0; y < Grid.gridSize; y++) {
+				System.out.print(this.getGrid().getTileFrom(x, y).toString() + " ");
+			}
+			System.out.println();
+		}
+		System.out.println("Markers on grid: "+ this.getNumberOfMarkers());
+	}
 
 	/**
 	 * Resets the game by creating a new grid and sets the optional player

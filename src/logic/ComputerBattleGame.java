@@ -27,7 +27,7 @@ public class ComputerBattleGame extends SimpleTicTacToeGame{
 			this.getActivePlayer().markTile(currentPlayer.selectTileAutomatically());
 			this.swapActivePlayer();
 			this.determineWinner();
-			this.printGrid(this);
+			this.printGrid();
 		}
 	}
 
