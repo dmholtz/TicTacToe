@@ -13,6 +13,14 @@ import ui.markers.Marker;
 import ui.markers.OMarker;
 import ui.markers.XMarker;
 
+/**
+ * TicTacToeGame extends SimpleTicTacToeGame and provides a graphical user
+ * interface, which lets users play the game.
+ * 
+ * @author dmholtz
+ * @version v2.1
+ *
+ */
 public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEventListener {
 
 	private GraphicalUserInterface gui;
@@ -102,7 +110,8 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	 * @requires: this.isComputerActionRequired();
 	 */
 	private void performComputerAction() {
-		gui.removeUserRequestEventListener();;
+		gui.removeUserRequestEventListener();
+		;
 		if (!this.isComputerActionRequired()) {
 			throw new IllegalCallerException("Current player is not an instance of ComputerPlayer");
 		}
