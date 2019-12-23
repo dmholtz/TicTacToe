@@ -3,12 +3,19 @@ package logic;
 import java.awt.Color;
 import java.util.Optional;
 
-import datatypes.Coordinate;
 import model.Game;
 import model.Grid;
 import model.Player;
 import model.Symbol;
 
+/**
+ * Extends game by providing basic TicTacToe game logic. SimpleTicTacToe games
+ * have a activePlayer attribute, which must be equal to either of this class's
+ * inherited player attributes
+ * 
+ * @author dmholtz
+ *
+ */
 public class SimpleTicTacToeGame extends Game {
 
 	private Player activePlayer;
@@ -16,7 +23,6 @@ public class SimpleTicTacToeGame extends Game {
 	private Optional<Player> winner = Optional.empty();
 
 	public SimpleTicTacToeGame() {
-		gameStatus = true;
 	}
 
 	protected void setDefaultPlayers() {
@@ -24,18 +30,15 @@ public class SimpleTicTacToeGame extends Game {
 		Player player2 = new Player("Player X", Symbol.X, Color.RED);
 		this.assignFirstPlayer(player1);
 		this.assignSecondPlayer(player2);
-		activePlayer = (this.player1.get());
+		activePlayer = (this.getFirstPlayer());
 	}
 
 	public void swapActivePlayer() {
-		if (activePlayer.equals(this.player1.get())) {
-			activePlayer = this.player2.get();
+		if (activePlayer.equals(this.getFirstPlayer())) {
+			activePlayer = this.getSecondPlayer();
 		} else {
-			activePlayer = this.player1.get();
+			activePlayer = this.getFirstPlayer();
 		}
-		/*
-		 * if(this.getNumberOfMarkers() >= 9) { gameStatus = false; }
-		 */
 	}
 
 	/**
@@ -46,9 +49,22 @@ public class SimpleTicTacToeGame extends Game {
 	}
 
 	/**
-	 * @param activePlayer the activePlayer to set
+	 * Sets the activePlayer. Active player must be equal to either of this class's
+	 * player attributes
+	 * 
+	 * @requires: game is initalized
+	 * @param activePlayer the activePlayer to set: must be equal to either of this
+	 *                     class's player attributes
 	 */
 	public final void setActivePlayer(Player activePlayer) {
+		if(!this.isInitialized())
+		{
+			throw new IllegalCallerException("Cannot set an active player to a non-initilized game");
+		}
+		if(!activePlayer.equals(this.getFirstPlayer()) && !activePlayer.equals(this.getSecondPlayer()))
+		{
+			throw new IllegalArgumentException("Given player is not one of the two players of this instance");
+		}
 		this.activePlayer = activePlayer;
 	}
 
@@ -109,11 +125,11 @@ public class SimpleTicTacToeGame extends Game {
 	}
 
 	public void determineWinner() {
-		if (isPlayerWinner(this.player1.get())) {
-			winner = Optional.of(this.player1.get());
+		if (isPlayerWinner(this.getFirstPlayer())) {
+			winner = Optional.of(this.getFirstPlayer());
 			gameStatus = false;
-		} else if (isPlayerWinner(this.player2.get())) {
-			winner = Optional.of(this.player2.get());
+		} else if (isPlayerWinner(this.getSecondPlayer())) {
+			winner = Optional.of(this.getSecondPlayer());
 			gameStatus = false;
 		} else {
 			winner = Optional.empty();
@@ -131,10 +147,6 @@ public class SimpleTicTacToeGame extends Game {
 
 	public Optional<Player> getWinner() {
 		return this.winner;
-	}
-
-	public boolean isTileEmpty(Coordinate tileCoordinate) {
-		return this.grid.getTileFrom(tileCoordinate).isEmpty();
 	}
 
 	public void printGrid(Game g) {

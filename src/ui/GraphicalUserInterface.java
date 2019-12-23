@@ -156,6 +156,10 @@ public class GraphicalUserInterface implements MouseListener {
 	public synchronized void setUserRequestEventListener(UserRequestEventListener listener) {
 		this.userRequestEventListeners = Optional.of(listener);
 	}
+	
+	public synchronized void removeUserRequestEventListener() {
+		this.userRequestEventListeners = Optional.empty();
+	}
 
 	private synchronized void fireUserRequestEvent(Coordinate source, UserRequest requestType) {
 		UserRequestEvent requestEvent = new UserRequestEvent(source, requestType);

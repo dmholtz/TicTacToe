@@ -2,10 +2,19 @@ package model;
 
 import java.util.Optional;
 
+import datatypes.Coordinate;
+
+/**
+ * Model representation of TicTacToe games
+ * 
+ * Each game has a grid and 
+ * @author dmholtz
+ *
+ */
 public abstract class Game {
 
-	protected Optional<Player> player1 = Optional.empty();
-	protected Optional<Player> player2 = Optional.empty();
+	private Optional<Player> player1 = Optional.empty();
+	private Optional<Player> player2 = Optional.empty();
 
 	protected Grid grid;
 
@@ -103,6 +112,15 @@ public abstract class Game {
 			}
 		}
 		return numberOfMarkers;
+	}
+	
+	/**
+	 * Returns whether a tile at a given coordinate is empty
+	 * @param tileCoordinate must be a valid coordinate object
+	 * @return
+	 */
+	public boolean isTileEmptyAt(Coordinate tileCoordinate) {
+		return this.grid.getTileFrom(tileCoordinate).isEmpty();
 	}
 
 	/**
