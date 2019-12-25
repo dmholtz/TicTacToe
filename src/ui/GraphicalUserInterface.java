@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Optional;
 
 import javax.swing.ImageIcon;
@@ -33,12 +35,10 @@ import ui.events.UserRequestEventListener;
  *
  */
 public class GraphicalUserInterface implements MouseListener {
-	
-	private static String iconPath = "src/icons/TicTacToeIcon.png";
 
 	private TilePanel allTiles[][] = new TilePanel[3][3];
 	private JFrame applicationWindow;
-	
+
 	private JSplitPane splitpane;
 
 	private JPanel gamePanel;
@@ -68,16 +68,33 @@ public class GraphicalUserInterface implements MouseListener {
 		applicationWindow.setVisible(true);
 		applicationWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
-	private void setupFrame()
-	{
+
+	/**
+	 * Sets up the GUI's JFrame with label, size and icon
+	 */
+	private void setupFrame() {
 		applicationWindow = new JFrame("TicTacToe Game by dmholtz");
 		applicationWindow.setSize(700, 600);
 		applicationWindow.setLocationByPlatform(true);
 		applicationWindow.setResizable(false);
-		ImageIcon icon = new ImageIcon(GraphicalUserInterface.iconPath);
-		System.out.println(icon.getIconHeight());
-		applicationWindow.setIconImage(icon.getImage());
+		this.loadIcon();
+	}
+
+	/**
+	 * Tries to load this JFrames icon from a static URL. Requires an internet
+	 * connection. If the image could not be loaded, an exception is thrown and
+	 * caught. In this case, no icon is set to the JFrame and the standard icon is
+	 * used. The app still works perfectly fine without this icon.
+	 */
+	private void loadIcon() {
+		URL iconURL;
+		try {
+			iconURL = new URL("https://raw.githubusercontent.com/dmholtz/TicTacToe/master/src/icons/TicTacToeIcon.png");
+			ImageIcon icon = new ImageIcon(iconURL);
+			applicationWindow.setIconImage(icon.getImage());
+		} catch (MalformedURLException e) {
+			System.out.println("Cannot not access the given URL.");
+		}
 	}
 
 	/**
