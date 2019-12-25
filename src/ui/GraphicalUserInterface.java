@@ -35,6 +35,8 @@ public class GraphicalUserInterface implements MouseListener {
 
 	private TilePanel allTiles[][] = new TilePanel[3][3];
 	private JFrame applicationWindow;
+	
+	private JSplitPane splitpane;
 
 	private JPanel gamePanel;
 	private JPanel controlPanel;
@@ -67,7 +69,7 @@ public class GraphicalUserInterface implements MouseListener {
 	}
 
 	/**
-	 * Setup for gamePanel. May only be called within setupWindow() method
+	 * Setup for gamePanel.
 	 */
 	private void setupGamePanel() {
 		GridLayout gl = new GridLayout(3, 3);
@@ -78,7 +80,7 @@ public class GraphicalUserInterface implements MouseListener {
 	}
 
 	/**
-	 * Setup for controlPanel. May only be called within setupWindow() method
+	 * Setup for controlPanel.
 	 */
 	private void setupControlPanel() {
 		controlPanel = new JPanel();
@@ -96,11 +98,11 @@ public class GraphicalUserInterface implements MouseListener {
 	 *            beforehand.
 	 */
 	private void mergeAndAddPanels() {
-		JSplitPane splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
-		splitpane.setResizeWeight(0.05);
-		splitpane.setRightComponent(this.gamePanel);
-		splitpane.setLeftComponent(this.controlPanel);
-		splitpane.setEnabled(false);
+		this.splitpane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, false);
+		this.splitpane.setResizeWeight(0.05);
+		this.splitpane.setRightComponent(this.gamePanel);
+		this.splitpane.setLeftComponent(this.controlPanel);
+		this.splitpane.setEnabled(false);
 
 		applicationWindow.add(splitpane);
 	}
@@ -186,10 +188,15 @@ public class GraphicalUserInterface implements MouseListener {
 	}
 
 	/**
-	 * Closes the GUI and disposes the java swing frame.
+	 * Resets the graphical user interface
 	 */
-	public void close() {
-		applicationWindow.dispose();
+	public void resetGUI() {
+		applicationWindow.remove(this.splitpane);
+		this.setupGamePanel();
+		this.setupControlPanel();
+		this.mergeAndAddPanels();
+		this.addTilesToGamePanel();
+		applicationWindow.setVisible(true);
 	}
 
 	/**

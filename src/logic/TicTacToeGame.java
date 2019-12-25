@@ -57,6 +57,7 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		this.gui = new GraphicalUserInterface();
 		this.gui.requestAndSetPlayers(this);
 		this.gui.setUserRequestEventListener(this);
+		this.updateStatus();
 		this.monitorGameStatus();
 	}
 
@@ -86,9 +87,13 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	 * @requires: an active game, i.e. gui must be non-null
 	 */
 	private void restartGame() {
+		this.gui.removeUserRequestEventListener();
+		this.gui.resetGUI();
 		this.resetGame();
-		this.gui.close();
-		this.run();
+		this.gui.requestAndSetPlayers(this);
+		this.gui.setUserRequestEventListener(this);
+		this.updateStatus();
+		this.monitorGameStatus();
 	}
 
 	/**
@@ -109,11 +114,17 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 	 * 
 	 * @requires: this.isComputerActionRequired();
 	 */
-	private void performComputerAction() {
-		gui.removeUserRequestEventListener();
-		;
+	private void performComputerAction() {	
 		if (!this.isComputerActionRequired()) {
 			throw new IllegalCallerException("Current player is not an instance of ComputerPlayer");
+		}
+		gui.removeUserRequestEventListener();
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		ComputerPlayer currentPlayer = (ComputerPlayer) this.getActivePlayer();
 		Coordinate c = currentPlayer.selectTileAutomatically();
@@ -121,14 +132,8 @@ public class TicTacToeGame extends SimpleTicTacToeGame implements UserRequestEve
 		Marker marker = generateMarkerForPlayer(currentPlayer);
 		TileUpdateTask task = new TileUpdateTask(c, UserRequest.MARK_TILE, marker);
 		gui.updateGame(task);
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		gui.setUserRequestEventListener(this);
-		this.finishMove();
+		this.finishMove();	
 	}
 
 	/**
