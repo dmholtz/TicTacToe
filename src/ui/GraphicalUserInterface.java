@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Optional;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,6 +33,8 @@ import ui.events.UserRequestEventListener;
  *
  */
 public class GraphicalUserInterface implements MouseListener {
+	
+	private static String iconPath = "src/icons/TicTacToeIcon.png";
 
 	private TilePanel allTiles[][] = new TilePanel[3][3];
 	private JFrame applicationWindow;
@@ -46,17 +49,15 @@ public class GraphicalUserInterface implements MouseListener {
 	private Optional<UserRequestEventListener> userRequestEventListeners = Optional.empty();
 
 	public GraphicalUserInterface() {
-		this.setupWindow();
+		this.initGUI();
 	}
 
 	/**
 	 * Initial setup of this instance's swing components. May be only called when
 	 * generating new instance of GraphicalUserInterface
 	 */
-	private void setupWindow() {
-		applicationWindow = new JFrame("TicTacToe Game by dmholtz");
-		applicationWindow.setSize(700, 600);
-		applicationWindow.setResizable(false);
+	private void initGUI() {
+		this.setupFrame();
 
 		this.setupGamePanel();
 		this.setupControlPanel();
@@ -66,6 +67,17 @@ public class GraphicalUserInterface implements MouseListener {
 
 		applicationWindow.setVisible(true);
 		applicationWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private void setupFrame()
+	{
+		applicationWindow = new JFrame("TicTacToe Game by dmholtz");
+		applicationWindow.setSize(700, 600);
+		applicationWindow.setLocationByPlatform(true);
+		applicationWindow.setResizable(false);
+		ImageIcon icon = new ImageIcon(GraphicalUserInterface.iconPath);
+		System.out.println(icon.getIconHeight());
+		applicationWindow.setIconImage(icon.getImage());
 	}
 
 	/**
