@@ -5,8 +5,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Optional;
 
 import javax.swing.ImageIcon;
@@ -36,6 +34,7 @@ import ui.events.UserRequestEventListener;
  */
 public class GraphicalUserInterface implements MouseListener {
 
+	private static final String iconPath = "/resources/TicTacToeIcon.png";
 	private TilePanel allTiles[][] = new TilePanel[3][3];
 	private JFrame applicationWindow;
 
@@ -81,19 +80,16 @@ public class GraphicalUserInterface implements MouseListener {
 	}
 
 	/**
-	 * Tries to load this JFrames icon from a static URL. Requires an internet
-	 * connection. If the image could not be loaded, an exception is thrown and
-	 * caught. In this case, no icon is set to the JFrame and the standard icon is
-	 * used. The app still works perfectly fine without this icon.
+	 * Tries to load this JFrames icon. The icon is stored in the iconPath-
+	 * directory. If the icon cannot be loaded, the standard JFrame icon is used.
+	 * The application works in either case
 	 */
 	private void loadIcon() {
-		URL iconURL;
 		try {
-			iconURL = new URL("https://raw.githubusercontent.com/dmholtz/TicTacToe/master/src/icons/TicTacToeIcon.png");
-			ImageIcon icon = new ImageIcon(iconURL);
+			ImageIcon icon = new ImageIcon(GraphicalUserInterface.class.getResource(iconPath));
 			applicationWindow.setIconImage(icon.getImage());
-		} catch (MalformedURLException e) {
-			System.out.println("Cannot not access the given URL.");
+		} catch (Exception e) {
+			System.out.println("Icon cannot be loaded. Continue without custom JFrame icon.");
 		}
 	}
 
